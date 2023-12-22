@@ -1,7 +1,7 @@
-package com.phonebook.phonebook.service;
+package com.phonebook.service;
 
-import com.phonebook.phonebook.model.Contact;
-import com.phonebook.phonebook.repository.PhoneRepository;
+import com.phonebook.model.Contact;
+import com.phonebook.repository.PhoneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +17,7 @@ public class PhoneService {
     }
 
     public Contact createContact(Contact contact) {
-        phoneRepository.save(contact);
-        return contact;
+        return phoneRepository.save(contact);
     }
 
     public Contact updateContact(Contact contact) {

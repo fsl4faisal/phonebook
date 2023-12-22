@@ -1,7 +1,8 @@
-package com.phonebook.phonebook.controller;
+package com.phonebook.controller;
 
-import com.phonebook.phonebook.model.Contact;
-import com.phonebook.phonebook.service.PhoneService;
+import com.phonebook.model.Contact;
+import com.phonebook.service.PhoneService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/contacts")
 public class PhoneController {
-
     private final PhoneService phoneService;
 
     public PhoneController(PhoneService phoneService) {
@@ -37,7 +37,7 @@ public class PhoneController {
     }
 
     @DeleteMapping("/{uuid}")
-    public void deleteContact(UUID uuid) {
+    public void deleteContact(@PathVariable UUID uuid) {
         phoneService.deleteContact(uuid);
     }
 
@@ -48,9 +48,8 @@ public class PhoneController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contact> getContact(UUID id) {
+    public ResponseEntity<Contact> getContact(@PathVariable UUID id) {
         var contact=phoneService.getContact(id);
         return ResponseEntity.ok(contact);
     }
-
 }

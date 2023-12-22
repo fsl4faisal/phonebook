@@ -1,6 +1,6 @@
-package com.phonebook.phonebook.repository;
+package com.phonebook.repository;
 
-import com.phonebook.phonebook.model.Contact;
+import com.phonebook.model.Contact;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -14,8 +14,8 @@ public class PhoneRepository {
 
     public Contact save(Contact contact) {
         var uuid = UUID.randomUUID();
-        contact.
-        contactMap.put(uuid, new Contact(uuid, contact.getFirstName(), contact.getLastName(), contact.getPhoneNumber()));
+        contact = Contact.builder().from(contact).uuid(uuid).build();
+        contactMap.put(uuid, contact);
         return contact;
     }
 
