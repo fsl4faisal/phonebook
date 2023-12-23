@@ -14,7 +14,7 @@ public class PhoneRepository {
 
     public Contact save(Contact contact) {
         var uuid = UUID.randomUUID();
-        contact = Contact.builder().from(contact).uuid(uuid).build();
+        contact = Contact.builder().from(contact).setUuid(uuid).build();
         contactMap.put(uuid, contact);
         return contact;
     }

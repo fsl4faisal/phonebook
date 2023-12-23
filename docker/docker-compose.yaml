@@ -2,7 +2,11 @@ version: '3.7'
 
 services:
   phonebook:
-    image: fsl4faisal/phonebook:0.0.1-SNAPSHOT
     mem_limit: 700m
+    container_name: phonebook
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      no_cache: true
     ports:
       - "8080:8080"

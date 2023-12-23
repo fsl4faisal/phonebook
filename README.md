@@ -1,7 +1,8 @@
 # Steps to build image 
+
+# Method 1
 1. Login to docker from command line
 2. Add configuration in pom.xml
-3. 
    
 ```shell
 docker login
@@ -10,7 +11,7 @@ mvn spring-boot:build-image -DskipTests
 ```
 
 
-pom.xml config
+### Add below in pom.xml
 ```xml
 	<build>
 		<plugins>
@@ -28,17 +29,57 @@ pom.xml config
 	</build>
 ```
 
-
-
-## Troubleshooting 
+### Issue 1
 when I named the image as `fsl4faisal/${project.artifactId}:${project.version}` it wasn't working i.e. `mvn spring-boot:build-image -DskipTests` 
 step was not moving forward
 Upon renaming it to `fsl4faisal/pb-${project.artifactId}:${project.version}` it worked.
 
-
+### Issue 2
 Also for the step `mvn spring-boot:build-image -DskipTests` I had to change the network from wifi to hotstop (internally running the wifi though) as I 
 was getting below issue
 
 ```
 dial tcp: lookup github.com: no such host
 ```
+It worked in the first attempt but didn't work in the second attempt 
+
+
+# Method 2
+Create `Dockerfile` in the base path of the project
+```shell
+mvn clean install
+```
+
+The above command will create the target directory which we will use in the Dockerfile
+
+#### Dockerfile
+```dockerfile
+FROM eclipse-temurin:17-jdk-alpine
+COPY target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+<br>
+
+#### docker-compose.yml
+```dockerfile
+version: '3.7'
+
+services:
+  phonebook:
+    mem_limit: 700m
+    container_name: phonebook
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      no_cache: true
+    ports:
+      - "8080:8080"
+
+```
+#### Troubleshooting
+At first I had the dockerfile and docker-compose.yml both in the docker directory it didn't work, it could not find the target folder from there. Then I had to move the Dockerfile to the base directory from there it was able to find
+
+
+# Verdit
+The method1 is unreliable but it pushes the image to docker repo which is nice. 
+Method 2 is independent of the docker image push to repo and it builds the image everytime we run the docker compose 
