@@ -1,6 +1,28 @@
-# Steps to build image 
+# Steps to run the application
+## Prerequisite
+1. Install jdk 17
+2. Install maven
+3. Running `mvn --version` should yield below
 
-# Method 1
+```shell
+ mvn --version
+Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+Maven home: /opt/maven
+Java version: 17.0.9, vendor: Private Build, runtime: /usr/lib/jvm/java-17-openjdk-amd64
+Default locale: en_IN, platform encoding: UTF-8
+OS name: "linux", version: "6.2.0-39-generic", arch: "amd64", family: "unix"
+
+```
+## Steps
+1. Install docker
+2. Clone the repo
+3. Run `mvn clean install`
+3. goto docker folder
+4. Run command `docker compose up`
+
+
+# Steps to build image
+## Method 1
 1. Login to docker from command line
 2. Add configuration in pom.xml
    
@@ -44,7 +66,7 @@ dial tcp: lookup github.com: no such host
 It worked in the first attempt but didn't work in the second attempt 
 
 
-# Method 2
+## Method 2
 Create `Dockerfile` in the base path of the project
 ```shell
 mvn clean install
